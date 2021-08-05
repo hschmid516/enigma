@@ -34,6 +34,14 @@ RSpec.describe Enigma do
     expect(@enigma.encrypt('hello world')[:key].length).to eq(5)
   end
 
+  it 'creates attributes for message, key, and date' do
+    @enigma.encrypt('hello world', '02715', '040895')
+
+    expect(@enigma.message).to eq('hello world')
+    expect(@enigma.key).to eq('02715')
+    expect(@enigma.date).to eq('040895')
+  end
+
   it "has A, B, C, and D keys" do
     @enigma.encrypt('hello world', '02715', '040895')
 
@@ -41,5 +49,20 @@ RSpec.describe Enigma do
     expect(@enigma.b_key).to eq('27')
     expect(@enigma.c_key).to eq('71')
     expect(@enigma.d_key).to eq('15')
+  end
+
+  it 'takes last four digits from date squared' do
+    @enigma.encrypt('hello world', '02715', '040895')
+
+    expect(@enigma.offsets_from_date).to eq('1025')
+  end
+
+  it 'creates offsets' do
+    @enigma.encrypt('hello world', '02715', '040895')
+
+    expect(@enigma.a_offset).to eq(1)
+    expect(@enigma.b_offset).to eq(0)
+    expect(@enigma.c_offset).to eq(2)
+    expect(@enigma.d_offset).to eq(5)
   end
 end
