@@ -1,4 +1,7 @@
+require './shiftable'
+
 class Enigma
+  include Shiftable
   attr_reader :message, :key, :date
 
   def initialize
@@ -17,24 +20,8 @@ class Enigma
   end
 
   def create_attributes(message, key, date)
-    @message = message
+    @message = message.downcase
     @key = key
     @date = date
-  end
-
-  def a_key
-    @key[0..1]
-  end
-
-  def b_key
-    @key[1..2]
-  end
-
-  def c_key
-    @key[2..3]
-  end
-
-  def d_key
-    @key[3..4]
   end
 end
