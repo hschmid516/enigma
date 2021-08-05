@@ -33,4 +33,13 @@ RSpec.describe Enigma do
     expect(@enigma.encrypt('hello world')[:key]).to be_a(String)
     expect(@enigma.encrypt('hello world')[:key].length).to eq(5)
   end
+
+  it "has A, B, C, and D keys" do
+    @enigma.encrypt('hello world', '02715', '040895')
+
+    expect(@enigma.a_key).to eq('02')
+    expect(@enigma.b_key).to eq('27')
+    expect(@enigma.c_key).to eq('71')
+    expect(@enigma.d_key).to eq('15')
+  end
 end
