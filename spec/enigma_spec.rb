@@ -44,32 +44,19 @@ RSpec.describe Enigma do
       expect(enigma.date).to eq('040895')
     end
 
-    it "has A, B, C, and D keys" do
-      expect(enigma.a_key).to eq('02')
-      expect(enigma.b_key).to eq('27')
-      expect(enigma.c_key).to eq('71')
-      expect(enigma.d_key).to eq('15')
+    it 'makes array of date offsets' do
+      expect(enigma.date_offsets).to eq(['1', '0', '2', '5'])
     end
 
-    it 'takes last four digits from date squared' do
-      expect(enigma.offsets_from_date).to eq('1025')
+    it 'makes array of all keys' do
+      expect(enigma.all_keys).to eq(["02", "27", "71", "15"])
     end
 
-    it 'creates offsets' do
-      expect(enigma.a_offset).to eq(1)
-      expect(enigma.b_offset).to eq(0)
-      expect(enigma.c_offset).to eq(2)
-      expect(enigma.d_offset).to eq(5)
+    it 'makes array of all shifts' do
+      expect(enigma.all_shifts).to eq([3, 27, 73, 20])
     end
 
-    it 'creates final shifts' do
-      expect(enigma.a_shift).to eq(3)
-      expect(enigma.b_shift).to eq(27)
-      expect(enigma.c_shift).to eq(73)
-      expect(enigma.d_shift).to eq(20)
-    end
-
-    it 'creates a character set' do
+    it 'makes a character set' do
       expected =
       ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o",
        "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", " "]
