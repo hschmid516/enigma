@@ -28,4 +28,25 @@ class Enigma
   def character_set
     ("a".."z").to_a << " "
   end
+
+  def shift_letters(message)
+    encrypted = ""
+    message.split(//).each_slice(4).map do |chars|
+      encrypted.concat(shift(a_shift, chars[0]).first)
+      if !chars[1].nil?
+        encrypted.concat(shift(b_shift, chars[1]).first)
+      end
+      if !chars[2].nil?
+        encrypted.concat(shift(c_shift, chars[2]).first)
+      end
+      if !chars[3].nil?
+        encrypted.concat(shift(d_shift, chars[3]).first)
+      end
+    end
+    encrypted
+  end
+
+  def shift(shift_letter, char)
+    character_set.rotate(character_set.index(char) + shift_letter)
+  end
 end
