@@ -13,20 +13,6 @@ RSpec.describe Enigma do
     it 'starts with no data' do
       expect(enigma.data).to eq({})
     end
-
-    it "uses today's date if none given" do
-      expected = {
-        encryption: 'nefau qdxly',
-        key: '02715',
-        date: Date.today.strftime('%d%m%y')
-      }
-      expect(enigma.encrypt('hello world', '02715')).to eq(expected)
-    end
-
-    it "can generate a random key and use today's date if none given" do
-      expect(enigma.encrypt('hello world')[:key]).to be_a(String)
-      expect(enigma.encrypt('hello world')[:key].length).to eq(5)
-    end
   end
 
   context 'keys and shifts' do
@@ -80,6 +66,32 @@ RSpec.describe Enigma do
         date: '040895'
       }
       expect(enigma.encrypt('hello world', '02715', '040895')).to eq(expected)
+    end
+
+    it 'has encrypt data in @data' do
+      enigma.encrypt('hello world', '02715', '040895')
+
+      expected = {
+        encryption: 'keder ohulw',
+        key: '02715',
+        date: '040895'
+      }
+      expect(enigma.data).to eq(expected)
+    end
+
+    it "uses today's date if none given" do
+      expected = {
+        encryption: 'nefau qdxly',
+        key: '02715',
+        date: Date.today.strftime('%d%m%y')
+      }
+      expect(enigma.encrypt('hello world', '02715')).to eq(expected)
+    end
+
+    it "can generate a random key and use today's date if none given" do
+      expect(enigma.encrypt('hello world')[:key]).to be_a(String)
+      expect(enigma.encrypt('hello world')[:key].length).to eq(5)
+      expect(enigma.data[:date]).to eq(Date.today.strftime('%d%m%y'))
     end
   end
 end
