@@ -65,4 +65,11 @@ RSpec.describe Enigma do
     expect(@enigma.c_offset).to eq(2)
     expect(@enigma.d_offset).to eq(5)
   end
+
+  it 'creates a character set' do
+    expected =
+    ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o",
+     "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", " "]
+    expect(@enigma.character_set).to eq(expected)
+  end
 end
