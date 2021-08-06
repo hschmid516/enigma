@@ -14,7 +14,7 @@ class Enigma
       key: key,
       date: date
     }
-    @encrypted[:encryption] = encrypt_text(message)
+    @encrypted[:encryption] = encrypt_text(message.downcase)
     @encrypted
   end
 
@@ -23,7 +23,7 @@ class Enigma
       key: key,
       date: date
     }
-    @decrypted[:decryption] = decrypt_text(message)
+    @decrypted[:decryption] = decrypt_text(message.downcase)
     @decrypted
   end
 
@@ -43,7 +43,7 @@ class Enigma
 
   def encrypt_chars(chars, date, key)
     chars.zip(all_shifts(date, key)).map do |char, key|
-        encrypt_shift(key, char).first
+      encrypt_shift(key, char).first
     end.join
   end
 
