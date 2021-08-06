@@ -76,4 +76,13 @@ RSpec.describe Enigma do
       expect(enigma.character_set).to eq(expected)
     end
   end
+
+  context 'encryption' do
+    enigma = Enigma.new
+    enigma.encrypt('hello world', '02715', '040895')
+
+    it 'can encrypt message' do
+      expect(enigma.shift_letters('hello world')).to eq('keder ohulw')
+    end
+  end
 end
