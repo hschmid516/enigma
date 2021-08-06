@@ -29,24 +29,16 @@ class Enigma
     ("a".."z").to_a << " "
   end
 
-  def shift_letters(message)
-    encrypted = ""
+  def encrypt_text(message)
     message.split(//).each_slice(4).map do |chars|
-      encrypted.concat(shift(a_shift, chars[0]).first)
-      if !chars[1].nil?
-        encrypted.concat(shift(b_shift, chars[1]).first)
-      end
-      if !chars[2].nil?
-        encrypted.concat(shift(c_shift, chars[2]).first)
-      end
-      if !chars[3].nil?
-        encrypted.concat(shift(d_shift, chars[3]).first)
-      end
-    end
-    encrypted
+      new_letters(chars)
+    end.join
   end
 
-  def shift(shift_letter, char)
-    character_set.rotate(character_set.index(char) + shift_letter)
+
+  def new_letters(chars)
+    chars.zip(all_shifts).map do |char, shift|
+        shift(shift, char).first
+    end.join
   end
 end

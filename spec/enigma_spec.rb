@@ -68,8 +68,12 @@ RSpec.describe Enigma do
     enigma = Enigma.new
     enigma.encrypt('hello world', '02715', '040895')
 
+    it 'can encrypt characters' do
+      expect(enigma.new_letters(['h', 'e', 'l'])).to eq('ked')
+    end
+
     it 'can encrypt message' do
-      expect(enigma.shift_letters('hello world')).to eq('keder ohulw')
+      expect(enigma.encrypt_text('hello world')).to eq('keder ohulw')
     end
   end
 end
