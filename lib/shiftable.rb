@@ -1,11 +1,11 @@
 module Shiftable
 
   def date_offsets
-    (@date.to_i ** 2).to_s[-4..-1].split(//)
+    (@data[:date].to_i ** 2).to_s[-4..-1].split(//)
   end
 
   def all_keys
-    @key.split(//).each_cons(2).map do |num|
+    @data[:key].split(//).each_cons(2).map do |num|
       num.join
     end
   end

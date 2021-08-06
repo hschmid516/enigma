@@ -1,5 +1,5 @@
-require './lib/enigma'
 require './spec_helper'
+require './lib/enigma'
 require 'date'
 
 RSpec.describe Enigma do
@@ -10,11 +10,8 @@ RSpec.describe Enigma do
       expect(enigma).to be_a(Enigma)
     end
 
-    it 'can create attributes from encrypt' do
-      enigma.create_attributes('hello world', '02715', '040895')
-
-      expect(enigma.key).to eq('02715')
-      expect(enigma.date).to eq('040895')
+    it 'starts with no data' do
+      expect(enigma.data).to eq({})
     end
 
     it "uses today's date if none given" do
@@ -36,9 +33,9 @@ RSpec.describe Enigma do
     enigma = Enigma.new
     enigma.encrypt('hello world', '02715', '040895')
 
-    it 'creates attributes for message, key, and date' do
-      expect(enigma.key).to eq('02715')
-      expect(enigma.date).to eq('040895')
+    it 'creates data hash including key and date' do
+      expect(enigma.data[:key]).to eq('02715')
+      expect(enigma.data[:date]).to eq('040895')
     end
 
     it 'makes array of date offsets' do
@@ -63,13 +60,16 @@ RSpec.describe Enigma do
 
   context 'encryption' do
     enigma = Enigma.new
-    enigma.create_attributes('hello world', '02715', '040895')
 
     it 'can encrypt characters' do
+      enigma.encrypt('hello world', '02715', '040895')
+
       expect(enigma.new_letters(['h', 'e', 'l'])).to eq('ked')
     end
 
     it 'can encrypt message' do
+      enigma.encrypt('hello world', '02715', '040895')
+
       expect(enigma.encrypt_text('hello world')).to eq('keder ohulw')
     end
 

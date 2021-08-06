@@ -2,25 +2,23 @@ require './lib/shiftable'
 
 class Enigma
   include Shiftable
-  attr_reader :key, :date
+  attr_reader :key, :data
 
   def initialize
-    @key = nil
-    @date = nil
+    @data = {}
   end
 
-  def encrypt(message, key = rand.to_s[2..6], date = Date.today.strftime('%d%m%y'))
-    create_attributes(message, key, date)
-    {
-      encryption: encrypt_text(message),
+  def encrypt(message, key = rand.to_s[2..6], date = today)
+    @data = {
       key: key,
       date: date
     }
+    @data[:encryption] = encrypt_text(message)
+    @data
   end
 
-  def create_attributes(message, key, date)
-    @key = key
-    @date = date
+  def today
+    Date.today.strftime('%d%m%y')
   end
 
   def character_set
