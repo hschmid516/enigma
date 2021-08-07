@@ -16,11 +16,15 @@ module Shiftable
     end
   end
 
-  def encrypt_shift(key, char)
-    character_set.rotate(character_set.index(char) + key)
+  def crypt(key, char, plus_minus)
+    character_set.rotate(character_set.index(char).send(plus_minus, key))
   end
 
-  def decrypt_shift(key, char)
-    character_set.rotate(character_set.index(char) - key)
+  def character_set
+    ("a".."z").to_a << " "
+  end
+
+  def random_key
+    rand.to_s[2..6]
   end
 end
