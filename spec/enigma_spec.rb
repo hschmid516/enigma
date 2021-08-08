@@ -102,4 +102,33 @@ RSpec.describe Enigma do
       expect(enigma.decrypt('nefau qdxly?!', '02715')).to eq(expected)
     end
   end
+
+  context 'creatable' do
+    enigma = Enigma.new
+    
+    it "creates today's date" do
+      today = enigma.make_date
+
+      expect(today).to be_a(String)
+      expect(today.length).to eq(6)
+      expect(today).to eq(Date.today.strftime('%d%m%y'))
+
+      allow(enigma).to receive(:make_date).and_return('080820')
+      today = enigma.make_date
+
+      expect(today).to eq('080820')
+    end
+
+    it "creates random key" do
+      key = enigma.random_key
+
+      expect(key).to be_a(String)
+      expect(key.length).to eq(5)
+
+      allow(enigma).to receive(:random_key).and_return('74812')
+      key = enigma.random_key
+
+      expect(key).to eq('74812')
+    end
+  end
 end
