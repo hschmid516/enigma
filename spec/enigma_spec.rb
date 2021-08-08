@@ -7,23 +7,12 @@ RSpec.describe Enigma do
     it 'exists' do
       expect(enigma).to be_a(Enigma)
     end
-
-    it 'instantiates an encrypter and decrypter ' do
-      expect(enigma.encrypter).to be_a(Encrypter)
-      expect(enigma.decrypter).to be_a(Decrypter)
-    end
   end
 
   context 'encryption' do
     enigma = Enigma.new
 
-    it 'can encrypt message' do
-      enigma.encrypt('hello world', '02715', '040895')
-
-      expect(enigma.encrypter.encrypt_text('hello world')).to eq('keder ohulw')
-    end
-
-    it 'can return encrypted message with encrypt' do
+    it 'can encrypt a message' do
       expected = {
         encryption: 'keder ohulw',
         key: '02715',
@@ -45,7 +34,7 @@ RSpec.describe Enigma do
     it "can generate a random key and use today's date if none given" do
       expect(enigma.encrypt('hello world')[:key]).to be_a(String)
       expect(enigma.encrypt('hello world')[:key].length).to eq(5)
-      expect(enigma.encrypter.encrypted[:date]).to eq(Date.today.strftime('%d%m%y'))
+      expect(enigma.encrypt('hello world')[:date]).to eq(Date.today.strftime('%d%m%y'))
     end
   end
 
