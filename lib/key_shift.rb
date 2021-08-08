@@ -1,7 +1,4 @@
-require './lib/creatable'
-
 class KeyShift
-  include Creatable
   attr_reader :key, :date
 
   def initialize(key, date)
