@@ -19,7 +19,11 @@ class Cipher
 
   def crypt_chars(chars)
     chars_shifts(chars).map do |char, shift|
-      rotate_chars(shift, char).first
+      if character_set.include?(char)
+        rotate_chars(shift, char).first
+      else
+        char
+      end
     end.join
   end
 
