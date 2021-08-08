@@ -15,6 +15,10 @@
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 require 'simplecov'
 SimpleCov.start
+require './lib/enigma'
+require './lib/key_shift'
+require './lib/cipher'
+require 'date'
 
 RSpec.configure do |config|
   # rspec-expectations config goes here. You can use an alternate

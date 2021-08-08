@@ -1,62 +1,22 @@
-require './lib/shiftable'
+require './lib/cipher'
+require './lib/creatable'
 
 class Enigma
-  include Shiftable
-  attr_reader :key, :encrypted, :decrypted
+  include Creatable
 
-  def initialize
-    @encrypted = {}
-    @decrypted = {}
-  end
-
-  def encrypt(message, key = rand.to_s[2..6], date = today)
-    @encrypted = {
+  def encrypt(message, key = random_key, date = make_date)
+    {
       key: key,
-      date: date
+      date: date,
+      encryption: Cipher.new(message, key, date, :+).crypt_text
     }
-    @encrypted[:encryption] = encrypt_text(message.downcase)
-    @encrypted
   end
 
-  def decrypt(message, key, date = today)
-    @decrypted = {
+  def decrypt(message, key = random_key, date = make_date)
+    {
       key: key,
-      date: date
+      date: date,
+      decryption: Cipher.new(message, key, date, :-).crypt_text
     }
-    @decrypted[:decryption] = decrypt_text(message.downcase)
-    @decrypted
-  end
-
-  def today
-    Date.today.strftime('%d%m%y')
-  end
-
-  def character_set
-    ("a".."z").to_a << " "
-  end
-
-  def encrypt_text(message)
-    message.split(//).each_slice(4).map do |chars|
-      encrypt_chars(chars, @encrypted[:date], @encrypted[:key])
-    end.join
-  end
-
-  def encrypt_chars(chars, date, key)
-    chars.zip(all_shifts(date, key)).map do |char, key|
-      encrypt_shift(key, char).first
-    end.join
-  end
-
-  def decrypt_text(message)
-    message.split(//).each_slice(4).map do |chars|
-      decrypt_chars(chars, @decrypted[:date], @decrypted[:key])
-    end.join
-
-  end
-
-  def decrypt_chars(chars, date, key)
-    chars.zip(all_shifts(date, key)).map do |char, key|
-      decrypt_shift(key, char).first
-    end.join
   end
 end
