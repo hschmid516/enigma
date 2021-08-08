@@ -14,7 +14,7 @@ else
    enigma.decrypt(message, key, date)
 
    decrypted = File.open('decrypted.txt', 'w')
-   decrypted.write(enigma.decrypted[:decryption])
+   decrypted.write(enigma.decrypt(message, key, date)[:decryption])
    decrypted.close
 
    puts "Created 'decrypted.txt' with the key: #{key}, and date: #{date}"

@@ -12,7 +12,7 @@ else
    enigma.encrypt(message, key, date)
 
    encrypted = File.open('encrypted.txt', 'w')
-   encrypted.write(enigma.encrypted[:encryption])
+   encrypted.write(enigma.encrypt(message, key, date)[:encryption])
    encrypted.close
 
    puts "Created 'encrypted.txt' with the key #{key} and date #{date}"
