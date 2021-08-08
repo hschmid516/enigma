@@ -1,23 +1,22 @@
-require './lib/shiftable'
+require './lib/cipher'
+require './lib/creatable'
 
 class Enigma
-  include Shiftable
-  attr_reader :encrypter, :decrypter
+  include Creatable
 
-  def initialize
-    @encrypter = Encrypter.new
-    @decrypter = Decrypter.new
+  def encrypt(message, key = random_key, date = make_date)
+    {
+      key: key,
+      date: date,
+      encryption: Cipher.new(message, key, date, :+).crypt_text
+    }
   end
 
-  def encrypt(message, key = random_key, date = today)
-    @encrypter.encryption(message, key, date)
-  end
-
-  def decrypt(message, key, date = today)
-    @decrypter.decryption(message, key, date)
-  end
-
-  def today
-    Date.today.strftime('%d%m%y')
+  def decrypt(message, key, date = make_date)
+    {
+      key: key,
+      date: date,
+      decryption: Cipher.new(message, key, date, :-).crypt_text
+    }
   end
 end
