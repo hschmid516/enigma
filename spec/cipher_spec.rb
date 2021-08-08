@@ -4,60 +4,67 @@ RSpec.describe Cipher do
   context 'initialization' do
     cipher = Cipher.new('hello world', '02715', '040895', :+)
 
-    xit 'exists' do
+    it 'exists' do
       expect(cipher).to be_a(Cipher)
     end
-  end
 
-  # context 'keys and shifts' do
-  #   encrypter = Encrypter.new
-  #   encrypter.encryption('hello world', '02715', '040895')
-  #
-  #   xit 'makes array of date offsets' do
-  #     expect(encrypter.date_offsets(encrypter.encrypted[:date])).to eq(['1', '0', '2', '5'])
-  #   end
-  #
-  #   xit 'makes array of all keys' do
-  #     expect(encrypter.all_keys(encrypter.encrypted[:key])).to eq(["02", "27", "71", "15"])
-  #   end
-  #
-  #   xit 'makes array of all shifts' do
-  #     expect(encrypter.all_shifts(encrypter.encrypted[:key], encrypter.encrypted[:date])).to eq([3, 27, 73, 20])
-  #   end
-  #
-  #   xit 'makes a character set' do
-  #     expected =
-  #     ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o",
-  #      "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", " "]
-  #     expect(encrypter.character_set).to eq(expected)
-  #   end
-  # end
+    it 'has attributes' do
+      expect(cipher.message).to eq('hello world')
+      expect(cipher.shifts).to be_a(KeyShift)
+      expect(cipher.plus_minus).to eq(:+)
+    end
+  end
 
   context 'encryption' do
     cipher = Cipher.new('hello world', '02715', '040895', :+)
 
-    xit 'can encrypt characters' do
-      encrypter.encryption('hello world', '02715', '040895')
-
-      expect(encrypter.crypt_chars(['h', 'e', 'l'], encrypter.encrypted[:key], encrypter.encrypted[:date], :+)).to eq('ked')
+    it 'can encrypt characters' do
+      expect(cipher.crypt_chars(['h', 'e', 'l', 'l'])).to eq('kede')
     end
 
-    xit 'encrypts a message' do
-      expected = {
-        encryption: 'keder ohulw',
-        key: '02715',
-        date: '040895'
-      }
-      expect(encrypter.encryption('hello world', '02715', '040895')).to eq(expected)
+    it 'encrypts a message' do
+      expect(cipher.crypt_text).to eq('keder ohulw')
     end
 
-    xit 'has encrypted data in @encrypted' do
-      expected = {
-        encryption: 'keder ohulw',
-        key: '02715',
-        date: '040895'
-      }
-      expect(encrypter.encrypted).to eq(expected)
+    it 'rotates chars' do
+      expected = ["k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v",
+        "w", "x", "y", "z", " ", "a", "b", "c", "d", "e", "f", "g", "h", "i", "j"]
+      expect(cipher.rotate_chars(3, 'h')).to eq(expected)
+    end
+
+    it 'creates arrays of characters with shifts' do
+      expected = [["h", 3], ["e", 27], ["l", 73], ["l", 20]]
+      expect(cipher.chars_shifts(['h', 'e', 'l', 'l'])).to eq(expected)
+    end
+
+    it 'makes a character set' do
+      expected =
+      ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n",
+        "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", " "]
+      expect(cipher.character_set).to eq(expected)
+    end
+  end
+
+  context 'decryption' do
+    cipher = Cipher.new('keder ohulw', '02715', '040895', :-)
+
+    it 'can decrypt characters' do
+      expect(cipher.crypt_chars(['k', 'e', 'd', 'e'])).to eq('hell')
+    end
+
+    it 'decrypts a message' do
+      expect(cipher.crypt_text).to eq('hello world')
+    end
+
+    it 'rotates chars backwards' do
+      expected = ["e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p",
+        "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", " ", "a", "b", "c", "d"]
+      expect(cipher.rotate_chars(3, 'h')).to eq(expected)
+    end
+
+    it 'creates arrays of characters with shifts' do
+      expected = [["k", 3], ["e", 27], ["d", 73], ["e", 20]]
+      expect(cipher.chars_shifts(['k', 'e', 'd', 'e'])).to eq(expected)
     end
   end
 end
