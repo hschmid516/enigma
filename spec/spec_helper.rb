@@ -15,6 +15,12 @@
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 require 'simplecov'
 SimpleCov.start
+require './lib/enigma'
+require './lib/decrypter'
+require './lib/encrypter'
+require './lib/cryptable'
+require './lib/shiftable'
+require 'date'
 
 RSpec.configure do |config|
   # rspec-expectations config goes here. You can use an alternate

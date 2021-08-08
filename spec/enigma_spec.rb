@@ -1,6 +1,4 @@
-require './spec_helper'
-require './lib/enigma'
-require 'date'
+require 'spec_helper'
 
 RSpec.describe Enigma do
   context 'initialization' do
@@ -34,7 +32,7 @@ RSpec.describe Enigma do
       expect(enigma.encrypt('hello world', '02715', '040895')).to eq(expected)
     end
 
-# Today's date works for this August, use mock so test always passes
+    # Today's date works for this August, use mock so test always passes
     it "uses today's date if none given" do
       expected = {
         encryption: 'nefau qdxly',
@@ -54,7 +52,7 @@ RSpec.describe Enigma do
   context 'decryption' do
     enigma = Enigma.new
 
-# Today's date works for this August, use mock so test always passes
+    # Today's date works for this August, use mock so test always passes
     it "uses today's date if none given" do
       expected = {
         decryption: 'hello world',

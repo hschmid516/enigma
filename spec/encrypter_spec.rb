@@ -1,4 +1,4 @@
-require './lib/encrypter'
+require './spec_helper'
 
 RSpec.describe Encrypter do
   context 'initialization' do
@@ -22,7 +22,7 @@ RSpec.describe Encrypter do
     end
 
     it 'makes array of all shifts' do
-      expect(encrypter.all_shifts(encrypter.encrypted[:date], encrypter.encrypted[:key])).to eq([3, 27, 73, 20])
+      expect(encrypter.all_shifts(encrypter.encrypted[:key], encrypter.encrypted[:date])).to eq([3, 27, 73, 20])
     end
 
     it 'makes a character set' do
@@ -39,7 +39,7 @@ RSpec.describe Encrypter do
     it 'can encrypt characters' do
       encrypter.encryption('hello world', '02715', '040895')
 
-      expect(encrypter.encrypt_chars(['h', 'e', 'l'], encrypter.encrypted[:date], encrypter.encrypted[:key])).to eq('ked')
+      expect(encrypter.crypt_chars(['h', 'e', 'l'], encrypter.encrypted[:key], encrypter.encrypted[:date], :+)).to eq('ked')
     end
 
     it 'encrypts a message' do

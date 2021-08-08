@@ -1,4 +1,4 @@
-require './lib/decrypter'
+require './spec_helper'
 
 RSpec.describe Decrypter do
   context 'initialization' do
@@ -25,7 +25,7 @@ RSpec.describe Decrypter do
 
     it 'makes array of all shifts' do
       expected = [3, 27, 73, 20]
-      expect(decrypter.all_shifts(decrypter.decrypted[:date], decrypter.decrypted[:key])).to eq(expected)
+      expect(decrypter.all_shifts(decrypter.decrypted[:key], decrypter.decrypted[:date])).to eq(expected)
     end
 
     it 'makes a character set' do
@@ -42,7 +42,7 @@ RSpec.describe Decrypter do
     it 'can decrypt characters' do
       decrypter.decryption('keder ohulw', '02715', '040895')
 
-      expect(decrypter.decrypt_chars(['k', 'e', 'd'], decrypter.decrypted[:date], decrypter.decrypted[:key])).to eq('hel')
+      expect(decrypter.crypt_chars(['k', 'e', 'd'], decrypter.decrypted[:key], decrypter.decrypted[:date], :-)).to eq('hel')
     end
 
     it 'decrypts a message' do
