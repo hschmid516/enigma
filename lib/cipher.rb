@@ -2,7 +2,7 @@ require './lib/creatable'
 
 class Cipher
   include Creatable
-  attr_reader :message
+  attr_reader :message, :shifts, :plus_minus
 
   def initialize(message, key, date, plus_minus)
     @message = message
@@ -18,11 +18,11 @@ class Cipher
 
   def crypt_chars(chars)
     chars_shifts(chars).map do |char, shift|
-      shift_letters(shift, char).first
+      rotate_chars(shift, char).first
     end.join
   end
 
-  def shift_letters(shift, char)
+  def rotate_chars(shift, char)
     character_set.rotate(character_set.index(char).send(@plus_minus, shift))
   end
 
