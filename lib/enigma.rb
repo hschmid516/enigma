@@ -12,7 +12,7 @@ class Enigma
     }
   end
 
-  def decrypt(message, key, date = make_date)
+  def decrypt(message, key = random_key, date = make_date)
     {
       key: key,
       date: date,
