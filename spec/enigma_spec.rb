@@ -43,6 +43,17 @@ RSpec.describe Enigma do
       }
       expect(enigma.encrypt('hello world')).to eq(expected)
     end
+
+    it "is not case sensitive and other chars return as itself" do
+      allow(enigma).to receive(:make_date).and_return('080821')
+
+      expected = {
+        encryption: 'nefau qdxly?!',
+        key: '02715',
+        date: '080821'
+      }
+      expect(enigma.encrypt('Hello World?!', '02715')).to eq(expected)
+    end
   end
 
   context 'decryption' do
@@ -56,7 +67,7 @@ RSpec.describe Enigma do
       }
       expect(enigma.decrypt('keder ohulw', '02715', '040895')).to eq(expected)
     end
-    
+
     it "uses today's date if none given" do
       allow(enigma).to receive(:make_date).and_return('080821')
 
@@ -78,6 +89,17 @@ RSpec.describe Enigma do
         date: '080821'
       }
       expect(enigma.decrypt('ezpylu aofh')).to eq(expected)
+    end
+
+    it "returns other chars as itself" do
+      allow(enigma).to receive(:make_date).and_return('080821')
+
+      expected = {
+        decryption: 'hello world?!',
+        key: '02715',
+        date: '080821'
+      }
+      expect(enigma.decrypt('nefau qdxly?!', '02715')).to eq(expected)
     end
   end
 end
