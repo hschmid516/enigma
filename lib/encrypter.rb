@@ -7,7 +7,6 @@ class Encrypter
   attr_reader :encrypted
 
   def initialize
-# Create make_crypt_hash method to store separate variables?  
     @encrypted = {}
   end
 
@@ -16,5 +15,9 @@ class Encrypter
     @encrypted[:date] = date
     @encrypted[:encryption] = encrypt_text(message.downcase)
     @encrypted
+  end
+
+  def encrypt_text(message)
+    crypt_text(message, @encrypted[:key], @encrypted[:date], :+)
   end
 end
