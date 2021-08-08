@@ -1,11 +1,12 @@
 require './lib/creatable'
+require './lib/key_shift'
 
 class Cipher
   include Creatable
   attr_reader :message, :shifts, :plus_minus
 
   def initialize(message, key, date, plus_minus)
-    @message = message
+    @message = message.downcase
     @shifts = KeyShift.new(key, date)
     @plus_minus = plus_minus
   end
