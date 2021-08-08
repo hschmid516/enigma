@@ -1,5 +1,4 @@
-require './lib/decrypter'
-require './lib/encrypter'
+require './lib/shiftable'
 
 class Enigma
   include Shiftable
@@ -21,5 +20,4 @@ class Enigma
   def today
     Date.today.strftime('%d%m%y')
   end
-
 end
