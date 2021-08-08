@@ -16,10 +16,8 @@
 require 'simplecov'
 SimpleCov.start
 require './lib/enigma'
-require './lib/decrypter'
-require './lib/encrypter'
-require './lib/cryptable'
-require './lib/shiftable'
+require './lib/key_shift'
+require './lib/cipher'
 require 'date'
 
 RSpec.configure do |config|
