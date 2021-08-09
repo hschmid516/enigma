@@ -11,27 +11,27 @@ class Cipher
     @plus_minus = plus_minus
   end
 
-  def crypt_text
-    @message.split(//).each_slice(4).map do |chars|
-      crypt_chars(chars)
+  def cipher_text
+    @message.chars.each_slice(4).map do |chars|
+      cipher_chars(chars)
     end.join
   end
 
-  def crypt_chars(chars)
+  def cipher_chars(chars)
     chars_shifts(chars).map do |char, shift|
       if character_set.include?(char)
-        rotate_chars(shift, char).first
+        rotate_characters(shift, char).first
       else
         char
       end
     end.join
   end
 
-  def rotate_chars(shift, char)
-    character_set.rotate(character_set.index(char).send(@plus_minus, shift))
-  end
-
   def chars_shifts(chars)
     chars.zip(@shifts.all_shifts)
+  end
+
+  def rotate_characters(shift, char)
+    character_set.rotate(character_set.index(char).send(@plus_minus, shift))
   end
 end
