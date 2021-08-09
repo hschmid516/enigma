@@ -5,7 +5,7 @@ class Cipher
   include Creatable
   attr_reader :message, :shifts, :plus_minus
 
-  def initialize(message, key, date, plus_minus)
+  def initialize(message, key = nil, date, plus_minus)
     @message = message.downcase
     @shifts = KeyShift.new(key, date)
     @plus_minus = plus_minus
