@@ -2,7 +2,7 @@ class Cracker < Cipher
   include Creatable
   attr_reader :keys, :date
 
-  def initialize(message, key = nil, date, plus_minus)
+  def initialize(message, date, plus_minus)
     @keys = crack_keys
     @date = date
     super(message, shifts, plus_minus)
@@ -10,9 +10,7 @@ class Cracker < Cipher
 
   def find_key
     try_key(@date)
-    until cracked?
-      try_key(@date)
-    end
+    try_key(@date) until cracked?
     shifts.key
   end
 
@@ -26,8 +24,8 @@ class Cracker < Cipher
   end
 
   def crack_last_four
-    last_four.split(//).each_slice(4).map do |chars|
-      crypt_chars(chars)
+    last_four.each_slice(4).map do |chars|
+      cipher_chars(chars)
     end.join
   end
 
@@ -36,7 +34,7 @@ class Cracker < Cipher
   end
 
   def last_four
-    @message[-4..-1].split(//).rotate(rotation).join
+    @message[-4..-1].chars.rotate(rotation)
   end
 
   def rotation

@@ -7,26 +7,26 @@ class Enigma
 
   def encrypt(message, key = random_key, date = make_date)
     {
+      encryption: Cipher.new(message, key, date, :+).cipher_text,
       key: key,
-      date: date,
-      encryption: Cipher.new(message, key, date, :+).crypt_text
+      date: date
     }
   end
 
   def decrypt(message, key = random_key, date = make_date)
     {
+      decryption: Cipher.new(message, key, date, :-).cipher_text,
       key: key,
-      date: date,
-      decryption: Cipher.new(message, key, date, :-).crypt_text
+      date: date
     }
   end
 
   def crack(message, date = make_date)
     key = Cracker.new(message, date, :-).find_key
     {
+      decryption: Cipher.new(message, key, date, :-).cipher_text,
       key: key,
-      date: date,
-      decryption: Cipher.new(message, key, date, :-).crypt_text
+      date: date
     }
   end
 end

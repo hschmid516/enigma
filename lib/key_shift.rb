@@ -12,17 +12,17 @@ class KeyShift
     end
   end
 
-  def date_offsets
-    (@date.to_i ** 2).to_s[-4..-1].split(//)
+  def keys_offsets
+    all_keys.zip(date_offsets)
   end
 
   def all_keys
-    @key.split(//).each_cons(2).map do |num|
+    @key.chars.each_cons(2).map do |num|
       num.join
     end
   end
 
-  def keys_offsets
-    all_keys.zip(date_offsets)
+  def date_offsets
+    (@date.to_i**2).to_s[-4..-1].chars
   end
 end
