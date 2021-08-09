@@ -44,7 +44,7 @@ RSpec.describe Enigma do
       expect(enigma.encrypt('hello world')).to eq(expected)
     end
 
-    it "is not case sensitive and other chars return as itself" do
+    it 'is not case sensitive and other chars return as itself' do
       allow(enigma).to receive(:make_date).and_return('080821')
 
       expected = {
@@ -91,7 +91,7 @@ RSpec.describe Enigma do
       expect(enigma.decrypt('ezpylu aofh')).to eq(expected)
     end
 
-    it "returns other chars as itself" do
+    it 'returns other chars as itself' do
       allow(enigma).to receive(:make_date).and_return('080821')
 
       expected = {
@@ -105,7 +105,7 @@ RSpec.describe Enigma do
 
   context 'creatable' do
     enigma = Enigma.new
-    
+
     it "creates today's date" do
       today = enigma.make_date
 
@@ -119,7 +119,7 @@ RSpec.describe Enigma do
       expect(today).to eq('080820')
     end
 
-    it "creates random key" do
+    it 'creates random key' do
       key = enigma.random_key
 
       expect(key).to be_a(String)
@@ -129,6 +129,30 @@ RSpec.describe Enigma do
       key = enigma.random_key
 
       expect(key).to eq('74812')
+    end
+  end
+
+  context 'cracking' do
+    enigma = Enigma.new
+
+    it 'can crack a message with no key' do
+      expected = {
+        decryption: 'hello world end',
+        key: '08304',
+        date: '291018'
+      }
+      expect(enigma.crack('vjqtbeaweqihssi', '291018')).to eq(expected)
+    end
+
+    it 'can crack a message with no key or date' do
+      allow(enigma).to receive(:make_date).and_return('291018')
+
+      expected = {
+        decryption: 'hello world end',
+        key: '08304',
+        date: '291018'
+      }
+      expect(enigma.crack('vjqtbeaweqihssi')).to eq(expected)
     end
   end
 end
