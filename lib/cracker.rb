@@ -2,7 +2,7 @@ class Cracker < Cipher
   include Creatable
   attr_reader :keys, :date
 
-  def initialize(message, key = nil, date, plus_minus)
+  def initialize(message, date, plus_minus)
     @keys = crack_keys
     @date = date
     super(message, shifts, plus_minus)
@@ -10,9 +10,7 @@ class Cracker < Cipher
 
   def find_key
     try_key(@date)
-    until cracked?
-      try_key(@date)
-    end
+    try_key(@date) until cracked?
     shifts.key
   end
 
