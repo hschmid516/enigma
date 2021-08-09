@@ -4,7 +4,7 @@ module Creatable
   end
 
   def character_set
-    ("a".."z").to_a << " "
+    ('a'..'z').to_a << ' '
   end
 
   def random_key
