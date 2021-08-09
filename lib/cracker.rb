@@ -24,8 +24,8 @@ class Cracker < Cipher
   end
 
   def crack_last_four
-    last_four.split(//).each_slice(4).map do |chars|
-      crypt_chars(chars)
+    last_four.each_slice(4).map do |chars|
+      cipher_chars(chars)
     end.join
   end
 
@@ -34,7 +34,7 @@ class Cracker < Cipher
   end
 
   def last_four
-    @message[-4..-1].split(//).rotate(rotation).join
+    @message[-4..-1].chars.rotate(rotation)
   end
 
   def rotation
