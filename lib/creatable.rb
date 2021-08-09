@@ -10,4 +10,8 @@ module Creatable
   def random_key
     rand.to_s[2..6]
   end
+
+  def crack_keys
+    ('00000'..'99999').to_a
+  end
 end
