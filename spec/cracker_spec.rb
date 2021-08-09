@@ -49,7 +49,7 @@ RSpec.describe Cracker do
     end
 
     it 'rotates last four of message' do
-      expect(@cracker.last_four).to eq('ssih')
+      expect(@cracker.last_four).to eq(['s','s','i','h'])
     end
 
     it 'finds position of keys in message' do
